@@ -135,7 +135,7 @@ if (Meteor.isClient) {
                   });
                 }
               });
-              // Clear form
+              // Clear add feed form
               $( ".url" ).val('');
             }
             //Session.set('title', result);
