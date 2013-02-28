@@ -1,0 +1,74 @@
+<head>
+    <title>ocular &mdash; a visual RSS reader</title>
+</head>
+
+<body>
+  <div id="feeds">
+    <div class="logo">
+      Ocular
+    </div>
+    {{loginButtons}}
+    
+    {{> feedList}}
+  </div>
+  <div id="article">
+    <iframe frameborder="0" src="http://localhost/"></iframe>
+  </div>
+</body>
+
+<template name="feedList">
+  <label>URL</label>
+  <input type="text" class="url">
+  <a href="#" class="add-feed">Add feed</a> | <a href="#" class="refresh-feeds">Refresh feeds</a>
+  {{#if error}}
+    <div class="alert alert-error">{{error}}</div>
+  {{/if}}
+
+  <div class="feed-list">
+    {{> favoritesList}}
+    {{#each feeds}}
+      <div class="feed {{_id}}">
+        <a href="#" class="delete-feed" title="Delete this feed.">D</a> 
+        <a href="#" class="mark-all-read" title="Mark all feed items as read.">M</a> 
+        <a href="#" class="delete-all-read" title="Delete all read feed items.">A</a>&nbsp;&nbsp;{{title}}&nbsp;<span class="article-count">{{unreadCount}}</span>
+      </div>
+      <div class="article-list {{_id}}" style="display:none;">
+        {{> articleList}}
+      </div>
+    {{/each}}
+  </div>
+</template>
+
+<template name="articleList">
+  <p class="temp">Some text</p>
+  {{#each articles}}
+    <div id="{{_id}}" class="article">
+      <ul class="controls">
+        <li><a href="#" class="favorite">F</a></li>
+        <li><a href="#" class="delete-article">D</a></li>
+      </ul>
+      {{#if read}}
+        <a class="read" href="#">{{title}}</a>
+      {{else}}
+        <a href="{{url}}">{{title}}</a>
+      {{/if}}
+      <div class="triangle"></div>
+    </div>
+  {{/each}}
+</template>
+
+<template name="favoritesList">
+  <div class="feed favorites">
+    <a href="#">Favorites</a>
+  </div>
+  <div class="favorites-list">
+    {{#each favorites}}
+      <div class="article">
+        <ul class="controls">
+          <li><a href="#" class="delete-article">D</a></li>
+        </ul>
+        <a href="{{url}}">{{title}}</a>
+      </div>
+    {{/each}}
+  </div>
+</template>
