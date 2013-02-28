@@ -42,6 +42,7 @@ a.delete-feed {
 	overflow:hidden;
 	padding:0 0 0 0;
 	position:absolute;
+	-webkit-overflow-scrolling:touch;
 }
 
 #article iframe {
