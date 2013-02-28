@@ -39,7 +39,8 @@ a.delete-feed {
 	top:0;
 	bottom:0;
 	left:150px;
-	overflow:hidden;
+	overflow:auto;
+	-webkit-overflow-scrolling:touch;
 	padding:0 0 0 0;
 	position:absolute;
 }

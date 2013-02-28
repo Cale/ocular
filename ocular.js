@@ -12,10 +12,9 @@ if (Meteor.isClient) {
     });
 
     // Make iframe scrollable on iOS webkit
-    if ( /iPhone|iPod|iPad/.test( navigator.userAgent ) ) {
+    if ( !/iPhone|iPod|iPad/.test( navigator.userAgent ) ) {
       $( "#article" ).css({
-              overflow: 'auto',
-              '-webkit-overflow-scrolling': 'touch'
+        overflow: 'hidden'
       });
     }
 
