@@ -11,6 +11,14 @@ if (Meteor.isClient) {
       sizeArticle();
     });
 
+    // Make iframe scrollable on iOS webkit
+    if ( /iPhone|iPod|iPad/.test( navigator.userAgent ) ) {
+      $( "#article" ).css({
+              overflow: 'auto',
+              '-webkit-overflow-scrolling': 'touch'
+      });
+    }
+
     // Feed refresh timer
     timer = function( time, func ) {
       refreshFeedsTimer = window.setTimeout( function() {
