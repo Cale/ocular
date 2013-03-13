@@ -107,7 +107,7 @@ if (Meteor.isClient) {
           dataType: "jsonp",
           success: function( data ) {
             if ( data['responseStatus'] !== 200 ) {
-              alert( "Could not fetch feed info. Try again." );
+              alert( "Could not fetch feed from "+url+". Try again." );
             } else {
               var feed = data['responseData'];
               var title = data['responseData']['feed']['title'];
@@ -214,6 +214,7 @@ if (Meteor.isClient) {
     updateSingleFeed = function( feeds, i ) {
       var url = feeds[i]['url'];
       var feedId = feeds[i]['_id'];
+      var feedTitle = feeds[i]['title'];
       var lastPublished = feeds[i]['lastPublishedDate'];
       var newLastPublished;
 
@@ -229,7 +230,7 @@ if (Meteor.isClient) {
             var articleCount = articles.length;
 
             for ( var j = 0; j < articles.length; j++ ) {
-              //console.log( "Article publish date: "+articles[j]['publishedDate']+" "+articles[j]['title'] );
+              console.log( "Article publish date: "+articles[j]['publishedDate']+" "+articles[j]['title'] );
               //console.log( "Saved articles' last publish date: "+lastPublished );
 
               // If first article, save published date.
@@ -240,15 +241,16 @@ if (Meteor.isClient) {
               }
 
               // If article publish date is newer than feed's last published date, add the article to the DB.
+              console.log( feedTitle+" last published "+lastPublished+" || Article: "+articles[j]['publishedDate']);
               if ( Date.parse( articles[j]['publishedDate'] ) > lastPublished ) {
-                //console.log( "===== Adding this new article ^^^^^^^" );
+                console.log( "===== Adding this new article to "+feedTitle+" ^^^^^^^" );
                 Meteor.call( 'addArticle', {
                   feedId: feedId,
                   title: articles[j]['title'],
                   url: articles[j]['link'],
                   publishedDate: articles[j]['publishedDate']
                 }, function( error, result ) {
-                  console.log( "Added article" );
+                  console.log( "Added article to "+feedTitle );
                   Meteor.call( 'updateReadCount', feedId, 1);
                 });
               }
@@ -256,7 +258,7 @@ if (Meteor.isClient) {
               //console.log(articleCount);
               // If last article, save last published date from newest article.
               if ( j === ( articleCount - 1 ) ) {
-                console.log("Last article");
+                //console.log("Last article");
                 //console.log( "Last article? i = "+i+" Length = "+articles.length );
                 //console.log(articles[i]['publishedDate']);
                 if ( feedId === Session.get( 'articleList' ) ) {
