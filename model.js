@@ -62,13 +62,7 @@ Meteor.methods({
       group: 0,
       unreadCount: options.articleCount
     });
-   },
-  // getFeed: function( feedUrl ) {
-  //   this.unblock();
-  //   console.log("URL: "+feedUrl);
-  //   var result = Meteor.http.call( "GET", "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&q="+feedUrl );
-  //   return result;
-  // },
+  },
   addArticle: function( options ) {
     options = options || {};
     pubDate = Date.parse( options.publishedDate );

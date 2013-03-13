@@ -41,16 +41,12 @@ if (Meteor.isClient) {
     return articles;
   }
 
-  Template.feedList.rendered = function() {
-    // Show article list after it's rerendered
+  Template.articleList.rendered = function() {
+    console.log( "Rendered" );
     feedId = Session.get( 'articleList' );
     readingArticleId = Session.get( 'reading' );
-    action = Session.get( "action" );
-    
-    if ( action === false ) {
-      $( ".article-list."+feedId ).show();
-      $( "#"+readingArticleId+" .triangle" ).show();
-    }
+    $( ".article-list."+feedId ).show();
+    $( "#"+readingArticleId+" .triangle" ).show();
   }
 
   Template.favoritesList.favorites = function() {
@@ -178,17 +174,16 @@ if (Meteor.isClient) {
     },
     'click .feed': function( event ) {
       event.preventDefault();
-      Session.set( 'articleList', this._id );
-      Session.set( "action", false );
-      if ( $( ".article-list."+this._id ).is( ':visible' ) ) {
-        $( ".article-list."+this._id ).hide();
-        Session.set( 'reading', null );
+      if ( Session.get( 'articleList' ) === this._id ) {
+        if ( $( ".article-list."+this._id ).is( ':visible' ) ) {
+          $( ".article-list" ).hide();
+        } else {
+          $( ".article-list."+this._id ).show();
+        }
       } else {
-        $( ".article-list" ).hide();
+        Session.set( 'articleList', this._id );
         articles = Articles.find({ feedId: this._id }, {sort: { "publishedDate": -1 }});
         Session.set( 'arts', articles.fetch());
-        $( ".article-list."+this._id ).show();
-        $( ".favorites-list" ).hide();
       }
     },
     'click .feed.favorites': function( event ) {

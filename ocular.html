@@ -37,7 +37,7 @@
   <div class="feed-list">
     {{> favoritesList}}
     {{#each feeds}}
-      <div class="feed {{_id}}">
+      <div class="feed {{_id}}" data-updated="{{lastPublishedDate}}">
         <a href="#" class="delete-feed" title="Delete this feed.">D</a> 
         <a href="#" class="mark-all-read" title="Mark all feed items as read.">M</a> 
         <a href="#" class="delete-all-read" title="Delete all read feed items.">A</a>&nbsp;&nbsp;{{title}}&nbsp;<span class="article-count">{{unreadCount}}</span>
@@ -52,7 +52,7 @@
 <template name="articleList">
   <p class="temp">Some text</p>
   {{#each articles}}
-    <div id="{{_id}}" class="article">
+    <div id="{{_id}}" class="article" data-pubdate="{{publishedDate}}">
       <ul class="controls">
         <li><a href="#" class="favorite">F</a></li>
         <li><a href="#" class="delete-article">D</a></li>
