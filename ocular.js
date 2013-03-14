@@ -181,6 +181,7 @@ if (Meteor.isClient) {
           $( ".article-list."+this._id ).show();
         }
       } else {
+        $( ".article-list" ).hide();
         Session.set( 'articleList', this._id );
         articles = Articles.find({ feedId: this._id }, {sort: { "publishedDate": -1 }});
         Session.set( 'arts', articles.fetch());
