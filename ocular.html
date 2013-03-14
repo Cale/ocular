@@ -54,8 +54,8 @@
   {{#each articles}}
     <div id="{{_id}}" class="article" data-pubdate="{{publishedDate}}">
       <ul class="controls">
-        <li><a href="#" class="favorite">F</a></li>
-        <li><a href="#" class="delete-article">D</a></li>
+        <li><a href="#" class="favorite" title="Save to favorites">F</a></li>
+        <li><a href="#" class="delete-article" title="Delete this article">D</a></li>
       </ul>
       {{#if read}}
         <a class="read" href="#">{{title}}</a>
