@@ -3,10 +3,22 @@ body {
 	font-family:Helvetica;
 	font-size:9px;
 	font-weight:normal;
+	margin:0;
+	padding:0;
 }
 
 a {
 	color:#e7e962;
+}
+
+.header {
+	background:#2e2e2e;
+	height:50px;
+}
+
+#login-buttons {
+	margin:0;
+	padding:5px;
 }
 
 .logo {
@@ -24,10 +36,14 @@ a {
 	padding:0;
 	position:absolute;
 	width:150px;
-	top:0;
+	top:15px;
 	bottom:0;
 	left:0;
 	z-index:10;
+}
+
+#feeds input, #feeds p {
+	margin-left:5px;
 }
 
 a.delete-feed {
@@ -36,7 +52,7 @@ a.delete-feed {
 
 #article {
 	background:#ddd;
-	top:0;
+	top:15px;
 	bottom:0;
 	left:150px;
 	overflow:auto;

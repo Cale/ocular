@@ -13,11 +13,13 @@
 </head>
 
 <body>
+  <div class="header">
+    {{loginButtons}}
+  </div>
   <div id="feeds">
     <div class="logo">
       Ocular
     </div>
-    {{loginButtons}}
     
     {{> feedList}}
   </div>
@@ -27,9 +29,8 @@
 </body>
 
 <template name="feedList">
-  <label>URL</label>
-  <input type="text" class="url">
-  <a href="#" class="add-feed">Add feed</a> | <a href="#" class="refresh-feeds">Refresh feeds</a>
+  <input type="text" class="url" placeholder="RSS URL">
+  <p><a href="#" class="add-feed">Add feed</a> | <a href="#" class="refresh-feeds">Refresh feeds</a></p>
   {{#if error}}
     <div class="alert alert-error">{{error}}</div>
   {{/if}}
@@ -50,7 +51,6 @@
 </template>
 
 <template name="articleList">
-  <p class="temp">Some text</p>
   {{#each articles}}
     <div id="{{_id}}" class="article" data-pubdate="{{publishedDate}}">
       <ul class="controls">
