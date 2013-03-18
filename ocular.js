@@ -69,7 +69,7 @@ if (Meteor.isClient) {
 
       if ( !this.read ) {
         Meteor.call( 'markRead', this._id, function( error, result ) {
-          Session.set( 'arts', Articles.find({ feedId: this.feedId }, {sort: {"publishedDate": -1}}).fetch());
+          Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
           Meteor.call( 'updateReadCount', that.feedId, -1 );
         });
       }
@@ -77,17 +77,18 @@ if (Meteor.isClient) {
     'click .favorite': function( event ) {
       event.preventDefault();
       event.stopPropagation();
-      Meteor.call( 'markFavorite', this._id );
+      Meteor.call( 'markFavorite', this._id, true );
     },
     'click .delete-article': function( event ) {
       event.preventDefault();
       event.stopPropagation();
       that = this;
-      Articles.remove( this._id );
       if ( this.read === false ) {
         Meteor.call( 'updateReadCount', that.feedId, -1 );
       }
-      Session.set( 'arts', Articles.find({ feedId: this.feedId }, {sort: {"publishedDate": -1}}).fetch());
+      Meteor.call( 'deleteArticle', this._id, function() {
+        Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
+      });
     }
   });
 
@@ -155,22 +156,22 @@ if (Meteor.isClient) {
       refreshFeeds( event );
     },
     'click .delete-feed': function() {
-      Articles.remove({feedId: this._id});
-      Feeds.remove( this._id );
+      Meteor.call( 'deleteAllArticles', this._id );
+      Meteor.call( 'deleteFeed', this._id );
     },
     'click .mark-all-read': function( event ) {
       event.preventDefault();
       event.stopPropagation();
       Meteor.call( 'updateReadCount', this._id, -(this.unreadCount) );
       Meteor.call( 'markAllRead', this._id, function() {
-        Session.set( 'arts', Articles.find({ feedId: this.feedId }, {sort: {"publishedDate": -1}}).fetch());
+        Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
       });
     },
     'click .delete-all-read': function( event ) {
       event.preventDefault();
       event.stopPropagation();
       Meteor.call( 'deleteAllRead', this._id, function() {
-        Session.set( 'arts', Articles.find({ feedId: this.feedId }, {sort: {"publishedDate": -1}}).fetch());
+        Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
       });
     },
     'click .feed': function( event ) {
@@ -188,13 +189,12 @@ if (Meteor.isClient) {
       } else {
         $( ".article-list" ).hide();
         Session.set( 'articleList', this._id );
-        articles = Articles.find({ feedId: this._id }, {sort: { "publishedDate": -1 }});
-        Session.set( 'arts', articles.fetch());
+        Session.set( 'arts', Articles.find({$and: [{ feedId: this._id }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
       }
     }
   });
 
-    Template.feedList.events({
+  Template.feedList.events({
     'click .favorites': function( event ) {
       event.preventDefault();
       event.stopPropagation();
@@ -214,7 +214,7 @@ if (Meteor.isClient) {
     'click .delete-favorite': function( event ) {
       event.preventDefault();
       event.stopPropagation();
-      //Meteor.call( 'unmarkFavorite', this._id );
+      Meteor.call( 'deleteArticle', this._id );
     }
   });
 
@@ -284,7 +284,7 @@ if (Meteor.isClient) {
                 //console.log(articles[i]['publishedDate']);
                 if ( feedId === Session.get( 'articleList' ) ) {
                   //console.log( "Rebuilding article list for "+feedId)
-                  Session.set( 'arts', Articles.find({ feedId: feedId }, {sort: {"publishedDate": -1}}).fetch());
+                  Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
                 }
                 Meteor.call( 'setLastPublishedDate', feedId, newLastPublished, function( error, result ) {
                   // Start the next feed.

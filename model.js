@@ -90,17 +90,26 @@ Meteor.methods({
   markAllRead: function( feed ) {
     return Articles.update({ feedId: feed }, { $set: { read: true } }, { multi: true });
   },
-  deleteAllRead: function( feed ) {
-    return Articles.remove({$and: [{feedId: feed}, {read: true}]});
+  deleteArticle: function( articleId ) {
+    return Articles.remove( articleId );
   },
-  markFavorite: function( articleId ) {
+  deleteAllRead: function( feed ) {
+    return Articles.remove({$and: [{feedId: feed}, {read: true}, {favorite: false}]});
+  },
+  deleteAllArticles: function( feedId ) {
+    return Articles.remove({$and: [{feedId: feedId}, {favorite: false}]});
+  },
+  markFavorite: function( articleId, state ) {
     return Articles.update( articleId, { 
-      $set: { favorite: true } 
+      $set: { favorite: state }
     });
   },
   updateReadCount: function( feedId, num ) {
     return Feeds.update( feedId, { 
       $inc: { unreadCount: num } 
     });
+  },
+  deleteFeed: function( feedId ) {
+    return Feeds.remove( feedId );
   }
 });
