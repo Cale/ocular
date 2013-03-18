@@ -44,6 +44,7 @@
         <a href="#" class="delete-all-read" title="Delete all read feed items.">A</a>&nbsp;&nbsp;{{title}}&nbsp;<span class="article-count">{{unreadCount}}</span>
       </div>
       <div class="article-list {{_id}}" style="display:none;">
+        <div class="no-articles" style="display:none;"><p>No items here.</p></div>
         {{> articleList}}
       </div>
     {{/each}}
@@ -68,16 +69,17 @@
 </template>
 
 <template name="favoritesList">
-  <div class="feed favorites">
+  <div class="favorites">
     <a href="#">Favorites</a>
   </div>
   <div class="favorites-list">
+    <div class="no-favorites" style="display:none;"><p>No favorites here.</p></div>
     {{#each favorites}}
       <div class="article">
         <ul class="controls">
-          <li><a href="#" class="delete-article">D</a></li>
+          <li><a href="#" class="delete-favorite">D</a></li>
         </ul>
-        <a href="{{url}}">{{title}}</a>
+        <a href="{{url}}" data-id="{{_id}}">{{title}}</a>
       </div>
     {{/each}}
   </div>

@@ -69,7 +69,7 @@ a.delete-feed {
 	height:100%;
 }
 
-.feed {
+.feed, .favorites {
 	background-color:#464646;
 	color:#62d1e9;
 	cursor:pointer;
@@ -84,12 +84,17 @@ a.delete-feed {
 	color:#ccc;
 }
 
-.article {
+.article, .no-articles, .no-favorites {
 	border-bottom:1px solid #555;
 	cursor:pointer;
 	line-height:12px;
 	padding:0;
 	min-height:33px;
+}
+
+.no-articles, .no-favorites {
+	padding:4px 0 4px 0;
+	text-align:center;
 }
 
 .article:hover {
@@ -116,7 +121,7 @@ a.delete-feed {
 	text-decoration:underline;
 }
 
-.article:hover a.delete-article {
+.article:hover a.delete-article, .article:hover a.delete-favorite {
 	color:#e96262;
 }
 

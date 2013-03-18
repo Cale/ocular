@@ -1,7 +1,8 @@
 if (Meteor.isClient) {
 
   Meteor.startup( function () {    
-    
+    var favCount;
+
     sizeArticle = function() {
       $( "#article" ).width( $( window ).width() - 150 );
     }
@@ -42,11 +43,13 @@ if (Meteor.isClient) {
   }
 
   Template.articleList.rendered = function() {
-    console.log( "Rendered" );
     feedId = Session.get( 'articleList' );
     readingArticleId = Session.get( 'reading' );
     $( ".article-list."+feedId ).show();
     $( "#"+readingArticleId+" .triangle" ).show();
+    if ( Session.get('arts').length == 0 ) {
+      $( ".no-articles" ).show();
+    }
   }
 
   Template.favoritesList.favorites = function() {
@@ -84,8 +87,6 @@ if (Meteor.isClient) {
       if ( this.read === false ) {
         Meteor.call( 'updateReadCount', that.feedId, -1 );
       }
-      //console.log( this );
-      //console.log( "Clicked delete article" );
       Session.set( 'arts', Articles.find({ feedId: this.feedId }, {sort: {"publishedDate": -1}}).fetch());
     }
   });
@@ -174,11 +175,15 @@ if (Meteor.isClient) {
     },
     'click .feed': function( event ) {
       event.preventDefault();
+      $( ".no-articles" ).hide();
       if ( Session.get( 'articleList' ) === this._id ) {
         if ( $( ".article-list."+this._id ).is( ':visible' ) ) {
           $( ".article-list" ).hide();
         } else {
           $( ".article-list."+this._id ).show();
+          if ( Session.get('arts').length == 0 ) {
+            $( ".no-articles" ).show();
+          }
         }
       } else {
         $( ".article-list" ).hide();
@@ -186,15 +191,30 @@ if (Meteor.isClient) {
         articles = Articles.find({ feedId: this._id }, {sort: { "publishedDate": -1 }});
         Session.set( 'arts', articles.fetch());
       }
-    },
-    'click .feed.favorites': function( event ) {
+    }
+  });
+
+    Template.feedList.events({
+    'click .favorites': function( event ) {
       event.preventDefault();
       event.stopPropagation();
+      favCount = Articles.find({$and: [{owner: Meteor.userId()}, {favorite: true}]}, {sort: {"publishedDate": -1}});
+      favCount = favCount.fetch().length;
       if ( $( ".favorites-list" ).is( ':visible') ) {
         $( ".favorites-list" ).hide();
       } else {
         $( ".favorites-list" ).show();
       }
+      if ( favCount === 0 ) {
+        $( ".no-favorites" ).show();
+      } else {
+        $( ".no-favorites" ).hide();
+      }
+    },
+    'click .delete-favorite': function( event ) {
+      event.preventDefault();
+      event.stopPropagation();
+      //Meteor.call( 'unmarkFavorite', this._id );
     }
   });
 
