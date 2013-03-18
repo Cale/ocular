@@ -160,7 +160,7 @@ if (Meteor.isClient) {
     'click .mark-all-read': function( event ) {
       event.preventDefault();
       event.stopPropagation();
-      Meteor.call( 'updateReadCount', feedId, -(this.unreadCount) );
+      Meteor.call( 'updateReadCount', this._id, -(this.unreadCount) );
       Meteor.call( 'markAllRead', this._id, function() {
         Session.set( 'arts', Articles.find({ feedId: this.feedId }, {sort: {"publishedDate": -1}}).fetch());
       });
