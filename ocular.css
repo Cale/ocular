@@ -116,7 +116,7 @@ a.delete-feed {
 	color:#676767;
 }
 
-.article a.delete-article, .article a.favorite {
+.article a.delete-article, .article a.favorite, .favorites-list .article a.delete-favorite {
 	color:#555;
 	text-decoration:underline;
 }

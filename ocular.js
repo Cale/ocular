@@ -29,7 +29,9 @@ if (Meteor.isClient) {
 
   });
 
-  Meteor.subscribe("feeds");
+  Meteor.subscribe( "feeds", function() {
+    refreshFeeds();
+  });
   Meteor.subscribe("articles");
 
   Template.feedList.feeds = function() {
@@ -115,8 +117,8 @@ if (Meteor.isClient) {
               var title = data['responseData']['feed']['title'];
               var feedId;
               var articleCount = data['responseData']['feed']['entries'].length;
-              console.log("Article count: "+articleCount);
-              console.log(title);
+              //console.log("Article count: "+articleCount);
+              //console.log(title);
               Meteor.call( 'addFeed', {
                 url: url,
                 title: title,
@@ -224,9 +226,9 @@ if (Meteor.isClient) {
     }
     timer( 600000, refreshFeeds );
     time = new Date();
-    console.log("");console.log("");console.log("");console.log("");
+    console.log("");
     console.log("Refreshing feeds at "+time.toLocaleTimeString());
-    console.log("");console.log("");console.log("");console.log("");
+    console.log("");
     Session.set( "action", true );
     var feeds = Feeds.find({$or: [{owner: Meteor.userId()}]}).fetch();
     var feedCount = feeds.length;
@@ -251,7 +253,7 @@ if (Meteor.isClient) {
             var articleCount = articles.length;
 
             for ( var j = 0; j < articles.length; j++ ) {
-              console.log( "Article publish date: "+articles[j]['publishedDate']+" "+articles[j]['title'] );
+              //console.log( "Article publish date: "+articles[j]['publishedDate']+" "+articles[j]['title'] );
               //console.log( "Saved articles' last publish date: "+lastPublished );
 
               // If first article, save published date.
@@ -262,9 +264,9 @@ if (Meteor.isClient) {
               }
 
               // If article publish date is newer than feed's last published date, add the article to the DB.
-              console.log( feedTitle+" last published "+lastPublished+" || Article: "+articles[j]['publishedDate']);
+              //console.log( feedTitle+" last published "+lastPublished+" || Article: "+articles[j]['publishedDate']);
               if ( Date.parse( articles[j]['publishedDate'] ) > lastPublished ) {
-                console.log( "===== Adding this new article to "+feedTitle+" ^^^^^^^" );
+                //console.log( "===== Adding this new article to "+feedTitle+" ^^^^^^^" );
                 Meteor.call( 'addArticle', {
                   feedId: feedId,
                   title: articles[j]['title'],
