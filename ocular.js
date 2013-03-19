@@ -213,6 +213,11 @@ if (Meteor.isClient) {
         $( ".no-favorites" ).hide();
       }
     },
+    'click .article.favorite-article': function( event ) {
+      event.preventDefault();
+      event.stopPropagation();
+      $( "#article iframe" ).attr( 'src', this.url );
+    },
     'click .delete-favorite': function( event ) {
       event.preventDefault();
       event.stopPropagation();
