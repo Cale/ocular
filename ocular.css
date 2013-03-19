@@ -46,6 +46,10 @@ a {
 	margin-left:5px;
 }
 
+.url {
+	width:120px;
+}
+
 a.delete-feed {
 	color:#e96262;
 }
@@ -154,9 +158,15 @@ a.delete-feed {
 }
 
 .triangle {
-	background:#f00;
 	display:none;
+}
+
+.triangle:after {
+	border-top:5px solid transparent;
+	border-bottom:5px solid transparent;
+	border-left:5px solid #fff;
+	content:'';
+	margin-top:4px;
+	margin-left:145px;
 	position:absolute;
-	width:5px;
-	height:5px;
 }

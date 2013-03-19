@@ -54,6 +54,7 @@
 <template name="articleList">
   {{#each articles}}
     <div id="{{_id}}" class="article" data-pubdate="{{publishedDate}}">
+      <div class="triangle"></div>
       <ul class="controls">
         <li><a href="#" class="favorite" title="Save to favorites">F</a></li>
         <li><a href="#" class="delete-article" title="Delete this article">D</a></li>
@@ -63,7 +64,6 @@
       {{else}}
         <a href="{{url}}">{{title}}</a>
       {{/if}}
-      <div class="triangle"></div>
     </div>
   {{/each}}
 </template>
