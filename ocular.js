@@ -278,7 +278,7 @@ if (Meteor.isClient) {
                   url: articles[j]['link'],
                   publishedDate: articles[j]['publishedDate']
                 }, function( error, result ) {
-                  console.log( "Added article to "+feedTitle );
+                  //console.log( "Added article to "+feedTitle );
                   Meteor.call( 'updateReadCount', feedId, 1);
                 });
               }
@@ -291,7 +291,7 @@ if (Meteor.isClient) {
                 //console.log(articles[i]['publishedDate']);
                 if ( feedId === Session.get( 'articleList' ) ) {
                   //console.log( "Rebuilding article list for "+feedId)
-                  Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
+                  Session.set( 'arts', Articles.find({$and: [{ feedId: feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
                 }
                 Meteor.call( 'setLastPublishedDate', feedId, newLastPublished, function( error, result ) {
                   // Start the next feed.
