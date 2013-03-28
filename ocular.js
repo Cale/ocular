@@ -233,7 +233,6 @@ if (Meteor.isClient) {
     time = new Date();
     console.log("");
     console.log("Refreshing feeds at "+time.toLocaleTimeString());
-    console.log("");
     Session.set( "action", true );
     var feeds = Feeds.find({$or: [{owner: Meteor.userId()}]}).fetch();
     var feedCount = feeds.length;
