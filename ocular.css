@@ -1,7 +1,7 @@
 body {
 	color:#aaa;
 	font-family:Helvetica;
-	font-size:9px;
+	font-size:10px;
 	font-weight:normal;
 	margin:0;
 	padding:0;
@@ -9,6 +9,27 @@ body {
 
 a {
 	color:#e7e962;
+}
+
+a.button {
+	background:#444;
+	border-radius:4px;
+	display:inline-block;
+	padding:5px 10px;
+	text-align:center;
+	text-decoration:none;
+}
+
+a.button:hover {
+	background:#555;
+}
+
+a.button.add-feed {
+	font-weight:bold;
+	margin-left:5px;
+	padding:5px;
+	height:13px;
+	width:13px;
 }
 
 .header {
@@ -35,19 +56,33 @@ a {
 	overflow-y:scroll;
 	padding:0;
 	position:absolute;
-	width:150px;
+	width:200px;
 	top:15px;
 	bottom:0;
 	left:0;
 	z-index:10;
 }
 
-#feeds input, #feeds p {
-	margin-left:5px;
+#feeds p {
+	text-align:center;
+}
+
+.feed-input {
+	margin:0 auto;
+	width:160px;
 }
 
 .url {
+	border:none;
+	display:block;
+	float:left;
+	margin:0 auto;
 	width:120px;
+}
+
+.add-feed {
+	display:block;
+	float:left;
 }
 
 a.delete-feed {
@@ -58,7 +93,7 @@ a.delete-feed {
 	background:#ddd;
 	top:15px;
 	bottom:0;
-	left:150px;
+	left:200px;
 	overflow:auto;
 	-webkit-overflow-scrolling:touch;
 	padding:0 0 0 0;
@@ -169,4 +204,11 @@ a.delete-feed {
 	margin-top:4px;
 	margin-left:145px;
 	position:absolute;
+}
+
+/* Clearfix */
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
 }

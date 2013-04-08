@@ -4,7 +4,7 @@ if (Meteor.isClient) {
     var favCount;
 
     sizeArticle = function() {
-      $( "#article" ).width( $( window ).width() - 150 );
+      $( "#article" ).width( $( window ).width() - 200 );
     }
     sizeArticle();
 
