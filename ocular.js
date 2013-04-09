@@ -30,7 +30,7 @@ if (Meteor.isClient) {
   });
 
   Meteor.subscribe( "feeds", function() {
-    //refreshFeeds();
+    refreshFeeds();
   });
   Meteor.subscribe("articles");
 
