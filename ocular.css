@@ -74,10 +74,13 @@ a.button.add-feed {
 
 .url {
 	border:none;
+	border-radius:4px;
 	display:block;
 	float:left;
 	margin:0 auto;
+	padding:0 5px 0 5px;
 	width:120px;
+	height:23px;
 }
 
 .add-feed {
@@ -110,9 +113,32 @@ a.delete-feed {
 
 .feed, .favorites {
 	background-color:#464646;
+	border-bottom:1px solid #2e2e2e;
 	color:#62d1e9;
 	cursor:pointer;
 	padding:4px 8px 4px 4px;
+	transition:background-color .1s;
+}
+
+.feed:hover, .favorites:hover {
+	background-color:#666;
+}
+
+.feed span {
+	display:inline-block;
+	float:left;
+}
+
+span.feed-title {
+	margin-left:5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width:115px;
+}
+
+span.article-count {
+	float:right;
 }
 
 .article-list, .favorites-list {
@@ -129,6 +155,7 @@ a.delete-feed {
 	line-height:12px;
 	padding:0;
 	min-height:33px;
+	transition:background-color .1s;
 }
 
 .no-articles, .no-favorites {

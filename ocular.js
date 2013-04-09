@@ -30,7 +30,7 @@ if (Meteor.isClient) {
   });
 
   Meteor.subscribe( "feeds", function() {
-    refreshFeeds();
+    //refreshFeeds();
   });
   Meteor.subscribe("articles");
 
@@ -157,26 +157,28 @@ if (Meteor.isClient) {
       event.preventDefault();
       refreshFeeds( event );
     },
-    'click .delete-feed': function() {
+    'click .delete-feed': function( event ) {
+      event.stopPropagation();
+      event.preventDefault();
       Meteor.call( 'deleteAllArticles', this._id );
       Meteor.call( 'deleteFeed', this._id );
     },
     'click .mark-all-read': function( event ) {
-      event.preventDefault();
       event.stopPropagation();
+      event.preventDefault();
       Meteor.call( 'updateReadCount', this._id, -(this.unreadCount) );
       Meteor.call( 'markAllRead', this._id, function() {
         Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
       });
     },
     'click .delete-all-read': function( event ) {
-      event.preventDefault();
       event.stopPropagation();
+      event.preventDefault();
       Meteor.call( 'deleteAllRead', this._id, function() {
         Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
       });
     },
-    'click .feed': function( event ) {
+    'click .feed-title': function( event ) {
       event.preventDefault();
       $( ".no-articles" ).hide();
       if ( Session.get( 'articleList' ) === this._id ) {
