@@ -79,7 +79,9 @@ if (Meteor.isClient) {
     'click .favorite': function( event ) {
       event.preventDefault();
       event.stopPropagation();
-      Meteor.call( 'markFavorite', this._id, true );
+      Meteor.call( 'markFavorite', this._id, true, function() {
+        Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
+      });
     },
     'click .delete-article': function( event ) {
       event.preventDefault();
