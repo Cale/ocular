@@ -180,6 +180,7 @@ if (Meteor.isClient) {
     },
     'click .feed-title': function( event ) {
       event.preventDefault();
+      $( ".favorites-list" ).hide();
       $( ".no-articles" ).hide();
       if ( Session.get( 'articleList' ) === this._id ) {
         if ( $( ".article-list."+this._id ).is( ':visible' ) ) {
@@ -207,6 +208,7 @@ if (Meteor.isClient) {
       if ( $( ".favorites-list" ).is( ':visible') ) {
         $( ".favorites-list" ).hide();
       } else {
+        $( ".article-list" ).hide();
         $( ".favorites-list" ).show();
       }
       if ( favCount === 0 ) {

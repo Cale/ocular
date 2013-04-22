@@ -41,7 +41,11 @@
   <div class="feed-list">
     {{> favoritesList}}
     {{#each feeds}}
+      {{#if unreadCount }}
       <div class="feed {{_id}} group" data-updated="{{lastPublishedDate}}">
+      {{else}}
+      <div class="feed {{_id}} group dimmed" data-updated="{{lastPublishedDate}}">
+      {{/if}}
         <span class="feed-controls">
           <a href="#" class="delete-feed" title="Delete this feed.">D</a> 
           <a href="#" class="mark-all-read" title="Mark all feed items as read.">M</a>
