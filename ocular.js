@@ -257,7 +257,7 @@ if (Meteor.isClient) {
         dataType: "jsonp",
         success: function( data ) {
           if ( data['responseStatus'] !== 200 ) {
-            alert( "Could not fetch feed info. Try again." );
+            alert( "Could not fetch "+url );
           } else {
             var articles = data['responseData']['feed']['entries'];
             var articleCount = articles.length;
