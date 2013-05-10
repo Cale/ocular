@@ -142,6 +142,10 @@ span.article-count {
 	float:right;
 }
 
+.loading-articles {
+	padding:30px;
+}
+
 .article-list, .favorites-list {
 	display:none;
 }
