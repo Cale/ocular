@@ -27,12 +27,20 @@ if (Meteor.isClient) {
     }
     timer( 600000, refreshFeeds );
 
+    if (Meteor.user()) {
+      $( ".feed-input, .feed-list" ).show();
+      refreshFeeds();
+    }
+    Deps.autorun( function() {
+      if ( Meteor.userId() ) {
+        $( ".feed-input, .feed-list" ).show();
+      }
+    });
+
   });
 
-  Meteor.subscribe( "feeds", function() {
-    refreshFeeds();
-  });
-  Meteor.subscribe("articles");
+  Meteor.subscribe( "feeds" );
+  Meteor.subscribe( "articles" );
 
   Template.feedList.feeds = function() {
     feeds = Feeds.find({$or: [{owner: Meteor.userId()}]});
@@ -47,8 +55,8 @@ if (Meteor.isClient) {
   Template.articleList.rendered = function() {
     feedId = Session.get( 'articleList' );
     readingArticleId = Session.get( 'reading' );
-    $( ".loading-articles" ).hide();
     $( ".article-list."+feedId ).show();
+    $( ".loading-articles" ).hide();
     $( "#"+readingArticleId+" .triangle" ).show();
     if ( Session.get('arts').length == 0 ) {
       $( ".no-articles" ).show();

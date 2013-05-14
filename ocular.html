@@ -30,7 +30,7 @@
 
 <template name="feedList">
   <div class="feed-input group">
-    <input type="text" class="url" placeholder="RSS URL">
+    <input type="text" class="url" placeholder="Enter an RSS URL">
     <a href="#" class="button add-feed">+</a>
   </div>
   <!-- <p><a href="#" class="button refresh-feeds">Refresh feeds</a></p> -->
@@ -55,7 +55,7 @@
         <span class="article-count">{{unreadCount}}</span>
       </div>
       <div class="article-list {{_id}}" style="display:none;">
-        <div class="loading-articles">Loading...</div>
+        <div class="loading-articles">Working...</div>
         <div class="no-articles" style="display:none;"><p>No items here.</p></div>
         {{> articleList}}
       </div>
