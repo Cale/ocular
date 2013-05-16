@@ -43,7 +43,7 @@ if (Meteor.isClient) {
   Meteor.subscribe( "articles" );
 
   Template.feedList.feeds = function() {
-    feeds = Feeds.find({$or: [{owner: Meteor.userId()}]});
+    feeds = Feeds.find({$or: [{owner: Meteor.userId()}]}, {sort: {"title": 1}});
     return feeds;
   }
 
@@ -253,7 +253,7 @@ if (Meteor.isClient) {
     console.log("");
     console.log("Refreshing feeds at "+time.toLocaleTimeString());
     Session.set( "action", true );
-    var feeds = Feeds.find({$or: [{owner: Meteor.userId()}]}).fetch();
+    var feeds = Feeds.find({$or: [{owner: Meteor.userId()}]}, {sort: {"title": 1}}).fetch();
     var feedCount = feeds.length;
     var i = 0;
 
@@ -335,7 +335,7 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish("feeds", function () {
-    return Feeds.find({$or: [{owner: this.userId}]});
+    return Feeds.find({$or: [{owner: this.userId}]}, {sort: {"title": 1}});
   });
   Meteor.publish("articles", function () {
     return Articles.find({$or: [{owner: this.userId}]}, {sort: {"publishedDate": -1}});
