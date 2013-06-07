@@ -37,6 +37,10 @@ if (Meteor.isClient) {
       }
     });
 
+    loadingIndicator = function() {
+      $( ".loading-articles" ).fadeIn();
+    }
+
   });
 
   Meteor.subscribe( "feeds" );
@@ -177,7 +181,7 @@ if (Meteor.isClient) {
     'click .mark-all-read': function( event ) {
       event.stopPropagation();
       event.preventDefault();
-      $( ".loading-articles" ).show();
+      loadingIndicator();
       Meteor.call( 'updateReadCount', this._id, -(this.unreadCount) );
       Meteor.call( 'markAllRead', this._id, function() {
         Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
@@ -186,7 +190,7 @@ if (Meteor.isClient) {
     'click .delete-all-read': function( event ) {
       event.stopPropagation();
       event.preventDefault();
-      $( ".loading-articles" ).show();
+      loadingIndicator();
       Meteor.call( 'deleteAllRead', this._id, function() {
         Session.set( 'arts', Articles.find({$and: [{ feedId: this.feedId }, {favorite: false}]}, {sort: {"publishedDate": -1}}).fetch());
       });
