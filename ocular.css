@@ -38,6 +38,7 @@ a.button.add-feed {
 }
 
 #login-buttons {
+	line-height:.5;
 	margin:0;
 	padding:5px;
 }
