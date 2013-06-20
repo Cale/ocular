@@ -45,6 +45,7 @@ if (Meteor.isClient) {
 
   Meteor.subscribe( "feeds" );
   Meteor.subscribe( "articles" );
+  
 
   Template.feedList.feeds = function() {
     feeds = Feeds.find({$or: [{owner: Meteor.userId()}]}, {sort: {"title": 1}});
